@@ -21,7 +21,7 @@ A Retrieval-Augmented Generation (RAG) system that processes local PDF documents
 
 1. **Clone & Setup**
 ```bash
-git clone https://github.com/[your-username]/complete-rag-system.git
+git clone https://github.com/akd711/Hexaware-assignment.git
 cd complete-rag-system
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
