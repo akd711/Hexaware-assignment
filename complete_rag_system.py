@@ -20,7 +20,7 @@ sys.path.append(os.path.dirname(__file__))
 class CompleteRAGSystem:
     def __init__(self):
         """Initialize the complete RAG system with all features"""
-        with st.spinner("🚀 Initializing Complete RAG System..."):
+        with st.spinner(" Initializing Complete RAG System..."):
             # Load embedding model
             self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -102,15 +102,15 @@ class CompleteRAGSystem:
     def load_pdfs_from_directory(self, pdf_dir="PDF's"):
         """Load PDFs from local directory (simulating Google Drive)"""
         if not os.path.exists(pdf_dir):
-            st.error(f"❌ Directory {pdf_dir} not found!")
+            st.error(f" Directory {pdf_dir} not found!")
             return False
         
         pdf_files = list(Path(pdf_dir).glob("*.pdf"))
         if not pdf_files:
-            st.error(f"❌ No PDF files found in {pdf_dir}")
+            st.error(f" No PDF files found in {pdf_dir}")
             return False
         
-        with st.spinner(f"📚 Loading {len(pdf_files)} PDF files..."):
+        with st.spinner(f" Loading {len(pdf_files)} PDF files..."):
             total_chunks = 0
             progress_bar = st.progress(0)
             
@@ -120,10 +120,10 @@ class CompleteRAGSystem:
                     total_chunks += chunks
                     progress_bar.progress((i + 1) / len(pdf_files))
                 except Exception as e:
-                    st.error(f"❌ Error processing {pdf_file.name}: {e}")
+                    st.error(f" Error processing {pdf_file.name}: {e}")
             
             progress_bar.empty()
-            st.success(f"✅ Loaded {len(pdf_files)} documents with {total_chunks} chunks")
+            st.success(f" Loaded {len(pdf_files)} documents with {total_chunks} chunks")
             return True
     
     def _process_pdf(self, pdf_path):
@@ -412,7 +412,7 @@ Answer:"""
                 print(f"Ollama error: {e}")
         
         # Fallback to template-based answer if Ollama fails
-        print("⚠️ Using fallback answer generation (Ollama not available)")
+        print(" Using fallback answer generation (Ollama not available)")
         
         # Generate better fallback answer
         if len(search_results) > 0:
@@ -440,7 +440,7 @@ Answer:"""
         is_safe, safety_message = self.apply_safety_guardrails(question)
         if not is_safe:
             return {
-                "answer": f"❌ Safety Check Failed: {safety_message}",
+                "answer": f" Safety Check Failed: {safety_message}",
                 "citations": [],
                 "retrieval_mode": retrieval_mode,
                 "top_k": top_k,
@@ -534,13 +534,13 @@ def main():
                         import requests
                         response = requests.get(f"{rag_system.ollama_url}/api/tags", timeout=5)
                         if response.status_code == 200:
-                            st.success("✅ Connection test successful!")
+                            st.success(" Connection test successful!")
                             models = response.json().get('models', [])
                             st.write(f"**Available models:** {[m['name'] for m in models]}")
                         else:
-                            st.error(f"❌ Connection test failed: {response.status_code}")
+                            st.error(f" Connection test failed: {response.status_code}")
                     except Exception as e:
-                        st.error(f"❌ Connection test error: {str(e)}")
+                        st.error(f" Connection test error: {str(e)}")
             
             if rag_system.ollama_connected:
                 available_models = rag_system._get_available_models()
@@ -552,11 +552,11 @@ def main():
                     )
                     if selected_model != rag_system.ollama_model:
                         rag_system.ollama_model = selected_model
-                        st.success(f"✅ Switched to {selected_model}")
+                        st.success(f" Switched to {selected_model}")
                 else:
                     st.info("No models found")
             else:
-                st.error("❌ Ollama not connected")
+                st.error(" Ollama not connected")
                 if st.button("🔄 Retry Connection"):
                     rag_system.ollama_connected = rag_system._check_ollama_connection()
                     st.rerun()
@@ -569,7 +569,7 @@ def main():
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.header("❓ Ask Your Question")
+        st.header(" Ask Your Question")
         
         # Question input
         question = st.text_area(
