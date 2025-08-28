@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-"""
-Complete RAG System - All Requirements Implemented
-This implements EVERY requirement from the internship assignment
-"""
 
 import streamlit as st
 import os
