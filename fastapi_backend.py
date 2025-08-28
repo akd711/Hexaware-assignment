@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-"""
-FastAPI Backend for Complete RAG System
-Implements all required API endpoints from the assignment
-"""
+
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -77,20 +74,20 @@ class APIRAGSystem:
         
         # Load documents
         self.load_pdfs_from_directory()
-        print("✅ API RAG System initialized successfully!")
+        print(" API RAG System initialized successfully!")
     
     def _check_ollama_connection(self):
         """Check if Ollama is running and accessible"""
         try:
             response = requests.get(f"{self.ollama_url}/api/tags", timeout=5)
             if response.status_code == 200:
-                print("✅ Ollama Connected!")
+                print(" Ollama Connected!")
                 return True
             else:
-                print("⚠️ Ollama not responding properly")
+                print("⚠ Ollama not responding properly")
                 return False
         except requests.exceptions.RequestException:
-            print("❌ Ollama not running. Please start Ollama first.")
+            print(" Ollama not running. Please start Ollama first.")
             return False
     
     def _get_available_models(self):
@@ -141,12 +138,12 @@ class APIRAGSystem:
     def load_pdfs_from_directory(self, pdf_dir="PDF's"):
         """Load PDFs from local directory (simulating Google Drive)"""
         if not os.path.exists(pdf_dir):
-            print(f"❌ Directory {pdf_dir} not found!")
+            print(f" Directory {pdf_dir} not found!")
             return False
         
         pdf_files = list(Path(pdf_dir).glob("*.pdf"))
         if not pdf_files:
-            print(f"❌ No PDF files found in {pdf_dir}")
+            print(f" No PDF files found in {pdf_dir}")
             return False
         
         print(f"Found {len(pdf_files)} PDF files")
@@ -158,9 +155,9 @@ class APIRAGSystem:
                 chunks = self._process_pdf(pdf_file)
                 total_chunks += chunks
             except Exception as e:
-                print(f"❌ Error processing {pdf_file.name}: {e}")
+                print(f" Error processing {pdf_file.name}: {e}")
         
-        print(f"✅ Loaded {len(pdf_files)} documents with {total_chunks} chunks")
+        print(f" Loaded {len(pdf_files)} documents with {total_chunks} chunks")
         return True
     
     def _process_pdf(self, pdf_path):
@@ -642,12 +639,12 @@ async def get_status():
     }
 
 if __name__ == "__main__":
-    print("🚀 Starting Complete RAG System API Server...")
-    print("📖 Interactive API Documentation: http://localhost:8000/docs")
-    print("🔍 Health check: http://localhost:8000/healthz")
-    print("❓ Query endpoint: POST http://localhost:8000/query")
-    print("📥 Ingest endpoint: POST http://localhost:8000/ingest")
-    print("🤖 Ollama Status:", "✅ Connected" if rag_system.ollama_connected else "❌ Disconnected")
+    print(" Starting Complete RAG System API Server...")
+    print(" Interactive API Documentation: http://localhost:8000/docs")
+    print("Health check: http://localhost:8000/healthz")
+    print(" Query endpoint: POST http://localhost:8000/query")
+    print("Ingest endpoint: POST http://localhost:8000/ingest")
+    print("🤖 Ollama Status:", "Connected" if rag_system.ollama_connected else "Disconnected")
     print("=" * 60)
     
     uvicorn.run(
